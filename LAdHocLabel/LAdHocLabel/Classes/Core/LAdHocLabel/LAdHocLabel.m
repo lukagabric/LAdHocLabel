@@ -46,7 +46,7 @@
         
         adhocLabel.font = [UIFont boldSystemFontOfSize:12];
         adhocLabel.textColor = [UIColor whiteColor];
-        adhocLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        adhocLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
         
         adhocLabel.text = adhocMessage;
         
@@ -144,21 +144,26 @@
 {
     CGRect windowBounds = [[UIApplication sharedApplication] keyWindow].bounds;
     
+    BOOL includeStatusBar = ([[[UIDevice currentDevice] systemVersion] compare:@"7" options:NSNumericSearch] != NSOrderedAscending);
+    
+    CGFloat statusBarOffset = includeStatusBar ? 0 : [self getStatusBarHeight];
+    CGFloat viewHeight = includeStatusBar ? VIEW_HEIGHT + 10 : VIEW_HEIGHT;
+
     CGRect frame;
     
     switch (orientation)
     {
         case UIInterfaceOrientationPortraitUpsideDown:
-            frame = CGRectMake(0, _shown ? windowBounds.size.height - VIEW_HEIGHT - [self getStatusBarHeight] : windowBounds.size.height - [self getStatusBarHeight], [self getStatusBarWidth], VIEW_HEIGHT);
+            frame = CGRectMake(0, _shown ? windowBounds.size.height - viewHeight - statusBarOffset : windowBounds.size.height - statusBarOffset, [self getStatusBarWidth], viewHeight);
             break;
         case UIInterfaceOrientationLandscapeLeft:
-            frame = CGRectMake(_shown ? [self getStatusBarHeight] : -VIEW_HEIGHT, 0, VIEW_HEIGHT, [self getStatusBarWidth]);
+            frame = CGRectMake(_shown ? statusBarOffset : -viewHeight, 0, viewHeight, [self getStatusBarWidth]);
             break;
         case UIInterfaceOrientationLandscapeRight:
-            frame = CGRectMake(_shown ? windowBounds.size.width - VIEW_HEIGHT - [self getStatusBarHeight] : windowBounds.size.width - [self getStatusBarHeight], 0, VIEW_HEIGHT, [self getStatusBarWidth]);
+            frame = CGRectMake(_shown ? windowBounds.size.width - viewHeight - statusBarOffset : windowBounds.size.width - statusBarOffset, 0, viewHeight, [self getStatusBarWidth]);
             break;
         default:
-            frame = CGRectMake(0, _shown ? [self getStatusBarHeight] : -VIEW_HEIGHT, [self getStatusBarWidth], VIEW_HEIGHT);
+            frame = CGRectMake(0, _shown ? statusBarOffset : -viewHeight, [self getStatusBarWidth], viewHeight);
             break;
     }
     
