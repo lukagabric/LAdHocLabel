@@ -484,6 +484,7 @@
 				4196712118E9ADC200136DD6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4196712218E9ADC200136DD6 /* Build configuration list for PBXNativeTarget "LAdHocLabelTests" */ = {
 			isa = XCConfigurationList;
@@ -492,6 +493,7 @@
 				4196712418E9ADC200136DD6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

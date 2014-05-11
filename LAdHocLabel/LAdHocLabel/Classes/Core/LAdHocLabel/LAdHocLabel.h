@@ -10,7 +10,8 @@
 }
 
 
-+ (void)showAdHocNumber:(NSUInteger)adHocNumber buildNumber:(NSUInteger)buildNumber andDeveloperName:(NSString *)developerName;
++ (void)showAdHocNumber:(NSUInteger)adHocNumber;
++ (void)showAdHocNumber:(NSUInteger)adHocNumber andDeveloperName:(NSString *)developerName;
 
 
 @end

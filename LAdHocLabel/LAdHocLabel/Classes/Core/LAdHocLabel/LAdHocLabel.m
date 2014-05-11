@@ -223,25 +223,26 @@
 #pragma mark - Static methods to show label
 
 
-+ (void)showAdHocNumber:(NSUInteger)adHocNumber buildNumber:(NSUInteger)buildNumber andDeveloperName:(NSString *)developerName
++ (void)showAdHocNumber:(NSUInteger)adHocNumber
+{
+    [self showAdHocNumber:adHocNumber andDeveloperName:nil];
+}
+
+
++ (void)showAdHocNumber:(NSUInteger)adHocNumber andDeveloperName:(NSString *)developerName
 {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void) {
         NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
-        NSString *version = [infoDict objectForKey:@"CFBundleVersion"];
+        NSString *version = [infoDict objectForKey:@"CFBundleShortVersionString"];
         NSString *appName = [infoDict objectForKey:@"CFBundleName"];
+        NSString *buildNumber = [infoDict objectForKey:@"CFBundleVersion"];
         
-        NSString *adhocMessage;
+        NSMutableString *adHocMessage = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%@ v%@ AH%@ b%@\n%s %s", appName, version, [self formattedWithInt:adHocNumber], buildNumber, __DATE__, __TIME__]];
+
+        if (developerName)
+            [adHocMessage appendFormat:@", %@", developerName];
         
-        if ([version hasPrefix:@"VER"])
-        {
-            adhocMessage = [NSString stringWithFormat:@"%@, %@\n%@", appName, developerName, version];
-        }
-        else
-        {
-            adhocMessage = [NSString stringWithFormat:@"%@ v.%@ AH%@ B%@\n%s %s, %@", appName, version, [self formattedWithInt:adHocNumber], [self formattedWithInt:buildNumber], __DATE__, __TIME__, developerName];
-        }
-        
-        LAdHocLabel *adhocLabel = [[LAdHocLabel alloc] initWithMessage:adhocMessage];
+        LAdHocLabel *adhocLabel = [[LAdHocLabel alloc] initWithMessage:[adHocMessage copy]];
         
         [adhocLabel show];
         

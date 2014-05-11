@@ -20,7 +20,7 @@
     
     self.window.rootViewController = [ViewController new];
     
-    [LAdHocLabel showAdHocNumber:1 buildNumber:1 andDeveloperName:@"lgabric"];
+    [LAdHocLabel showAdHocNumber:1 andDeveloperName:@"lgabric"];
     
     return YES;
 }
